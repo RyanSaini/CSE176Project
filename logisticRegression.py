@@ -93,15 +93,16 @@ def main():
     #print(logReg_L2.score(validation_X, labels_Y))
 
     df = pd.DataFrame([], columns = ["c", "accuracy"])
-
-    c = 0.01
-    while c <= 10:
+    
+    c = 0.001
+    while c <= 1:
         logReg_L2 = LogisticRegression(C = c, penalty = "l2", solver = "liblinear")
         logReg_L2.fit(training_X, labels_Y)
-        row = {"c" : c, "accuracy" : logReg_L2.score(validation_X, labels_Y)}
+        row = {"c" : c, "Accuracy" : logReg_L2.score(validation_X, labels_Y)}
         df = df.append(row, ignore_index = True)
-        c = c + 0.01
-    df.plot(x = "c", y = "accuracy", kind = "line")
+        c = c + 0.001
+    df.plot(x = "c", y = "Accuracy", kind = "line")
+    plt.show()
 
 # Normalizes image data by subtracting mean and dividing by standard deviation
 def normalizeData(data):
