@@ -43,5 +43,15 @@ def main():
     # Print accuracy of classifier on the validation set
     print(randForest.score(validation_X, labels_Y))
     
+
+def normalizeData(data):
+    mean = np.mean(data, axis = 0)
+    std = np.std(data, axis = 0)
+    std[std == 0] = 1
+
+    data_normalized = (data - mean) / std
+
+    return data_normalized
+    
 if __name__ == "__main__":
     main()
