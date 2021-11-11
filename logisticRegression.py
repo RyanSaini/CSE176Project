@@ -35,48 +35,50 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
+    training_X = normalizeData(training_X)
+
     # Making mean and std matrices
-    mean = np.mean(training_X, axis = 0)
-    std = np.std(training_X, axis = 0)
+    #mean = np.mean(training_X, axis = 0)
+    #std = np.std(training_X, axis = 0)
 
     # Data with 0 mean and data with 0 mean and unit variance
-    training_X_0_mean = training_X - mean
-    training_X_normalized = normalizeData(training_X)
+    #training_X_0_mean = training_X - mean
+    #training_X_normalized = normalizeData(training_X)
 
     # Display mean image
-    image = mean
-    image = np.array(image, dtype='float')
-    pixels = image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #image = mean
+    #image = np.array(image, dtype='float')
+    #pixels = image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Display std image
-    image = std
-    image = np.array(image, dtype='float')
-    pixels = image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #image = std
+    #image = np.array(image, dtype='float')
+    #pixels = image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Displays first image
-    image = training_X[0]
-    image = np.array(image, dtype='float')
-    pixels = image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #image = training_X[0]
+    #image = np.array(image, dtype='float')
+    #pixels = image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Displays first image with mean subtracted
-    first_image = training_X_0_mean[0]
-    first_image = np.array(first_image, dtype='float')
-    pixels = first_image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #first_image = training_X_0_mean[0]
+    #first_image = np.array(first_image, dtype='float')
+    #pixels = first_image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Displays first image with mean subtracted and unit variance
-    first_image = training_X_normalized[0]
-    first_image = np.array(first_image, dtype='float')
-    pixels = first_image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #first_image = training_X_normalized[0]
+    #first_image = np.array(first_image, dtype='float')
+    #pixels = first_image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Create logistic regression models
     logReg = LogisticRegression(penalty = "l1", solver = "liblinear")
