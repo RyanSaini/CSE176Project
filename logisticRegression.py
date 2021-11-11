@@ -26,17 +26,24 @@ def main():
     validation_6 = images_of_6[500: 1000]
     validation_8 = images_of_8[500: 1000]
 
-    # Combine data in order to create training and validation sets
+    # Select next 500 6s and 8s for test set
+    test_6 = images_of_6[1000:1500]
+    test_8 = images_of_8[1000:1500]
+
+    # Combine data in order to create training, validation, and test sets
     training_X = np.concatenate((training_6, training_8))
     validation_X = np.concatenate((validation_6, validation_8))
+    test_X = np.concatenate((test_6, test_8))
 
     # Creates labels for the training data
     training_Y_6 = [6] * 500
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
+    # Normalize data sets
     training_X = normalizeData(training_X)
     validation_X = normalizeData(validation_X)
+    test_X = normalizeData(test_X)
 
     # Making mean and std matrices
     #mean = np.mean(training_X, axis = 0)
