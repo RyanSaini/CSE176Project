@@ -81,14 +81,27 @@ def main():
     #plt.show()
 
     # Create logistic regression models
-    logReg = LogisticRegression(penalty = "l1", solver = "liblinear")
+    #logReg_L1 = LogisticRegression(C = 1, penalty = "l1", solver = "liblinear")
+    #logReg_L2 = LogisticRegression(C = 1, penalty = "l2", solver = "liblinear")
 
     # Trains model
-    logReg.fit(training_X, labels_Y)
+    #logReg_L1.fit(training_X, labels_Y)
+    #logReg_L2.fit(training_X, labels_Y)
 
-     # Prints out accuracy of model on validation set
-    print(logReg.score(validation_X, labels_Y))
+    # Prints out accuracy of model on validation set
+    #print(logReg_L1.score(validation_X, labels_Y))
+    #print(logReg_L2.score(validation_X, labels_Y))
 
+    df = pd.DataFrame([], columns = ["c", "accuracy"])
+
+    c = 0.01
+    while c <= 10:
+        logReg_L2 = LogisticRegression(C = c, penalty = "l2", solver = "liblinear")
+        logReg_L2.fit(training_X, labels_Y)
+        row = {"c" : c, "accuracy" : logReg_L2.score(validation_X, labels_Y)}
+        df = df.append(row, ignore_index = True)
+        c = c + 0.01
+    df.plot(x = "c", y = "accuracy", kind = "line")
 
 # Normalizes image data by subtracting mean and dividing by standard deviation
 def normalizeData(data):
