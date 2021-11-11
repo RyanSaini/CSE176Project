@@ -36,6 +36,7 @@ def main():
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
     training_X = normalizeData(training_X)
+    validation_X = normalizeData(validation_X)
 
     # Making mean and std matrices
     #mean = np.mean(training_X, axis = 0)
@@ -92,16 +93,32 @@ def main():
     #print(logReg_L1.score(validation_X, labels_Y))
     #print(logReg_L2.score(validation_X, labels_Y))
 
-    df = pd.DataFrame([], columns = ["c", "accuracy"])
-    
-    c = 0.001
-    while c <= 1:
+    df_L1 = pd.DataFrame([], columns = ["C", "accuracy"])
+    df_L2 = pd.DataFrame([], columns = ["C", "accuracy"])
+
+    c = 0.01
+    while c <= 1.15:
+        # Create models with varying C values and with different penalties
+        logReg_L1 = LogisticRegression(C = c, penalty = "l1", solver = "liblinear")
         logReg_L2 = LogisticRegression(C = c, penalty = "l2", solver = "liblinear")
+
+        # Train different models
+        logReg_L1.fit(training_X, labels_Y)
         logReg_L2.fit(training_X, labels_Y)
-        row = {"c" : c, "Accuracy" : logReg_L2.score(validation_X, labels_Y)}
-        df = df.append(row, ignore_index = True)
-        c = c + 0.001
-    df.plot(x = "c", y = "Accuracy", kind = "line")
+
+        # Create different rows of data for each model
+        row_L1 = {"C" : c, "Accuracy" : logReg_L1.score(validation_X, labels_Y)}
+        row_L2 = {"C" : c, "Accuracy" : logReg_L2.score(validation_X, labels_Y)}
+
+        # Add each respective row to its dataframe
+        df_L1 = df_L1.append(row_L1, ignore_index = True)
+        df_L2 = df_L2.append(row_L2, ignore_index = True)
+
+        c = c + 0.01
+
+    ax = df_L1.plot(x = "C", y = "Accuracy", kind = "line", color = "red", label = "L1 penalty")
+    df_L2.plot(x = "C", y = "Accuracy", kind = "line", ax = ax, color = "blue", label = "L2 penalty")
+    plt.legend()
     plt.show()
 
 # Normalizes image data by subtracting mean and dividing by standard deviation
