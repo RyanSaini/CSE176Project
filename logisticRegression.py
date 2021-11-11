@@ -9,7 +9,7 @@ from scipy.io import loadmat
 def main():
 
     # Read data from MNISTmini.mat
-    mnist_mini = loadmat("data/MNISTmini.mat")
+    mnist_mini = loadmat("MNISTmini.mat")
     mnist_mini_data = mnist_mini["train_fea1"]
     mnist_mini_label = mnist_mini["train_gnd1"]
     mnist_mini_label = mnist_mini_label.flatten()
