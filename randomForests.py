@@ -44,12 +44,10 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
-
-
     df = pd.DataFrame([], columns = ["num_trees", "error"])
     # Create random forest classifier model
     num_trees = 1
-    while num_trees <= 100:
+    while num_trees <= 1000:
         randForest = RandomForestClassifier(n_estimators = num_trees)
 
         # Train model with training data
