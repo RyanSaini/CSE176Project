@@ -8,7 +8,7 @@ from scipy.io import loadmat
 
 def main():
     # Read data from MNISTmini.mat
-    mnist_mini = loadmat("data/MNISTmini.mat")
+    mnist_mini = loadmat("MNISTmini.mat")
     mnist_mini_data = mnist_mini["train_fea1"]
     mnist_mini_label = mnist_mini["train_gnd1"]
     mnist_mini_label = mnist_mini_label.flatten()
@@ -44,15 +44,25 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
+
+
+    df = pd.DataFrame([], columns = ["num_trees", "error"])
     # Create random forest classifier model
-    randForest = RandomForestClassifier()
+    num_trees = 1
+    while num_trees <= 100:
+        randForest = RandomForestClassifier(n_estimators = num_trees)
 
-    # Train model with training data
-    randForest.fit(training_X, labels_Y)
+        # Train model with training data
+        randForest.fit(training_X, labels_Y)
 
-    # Print accuracy of classifier on the validation set
-    print(randForest.score(validation_X, labels_Y))
-    
+        row = {"num_trees" : num_trees, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+        df = df.append(row, ignore_index = True)
+
+        num_trees = num_trees + 1
+
+    df.plot(x = "num_trees", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying n_estimators Values", ylabel = "Error", xlabel = "Number of Trees")
+    plt.show()
 
 def normalizeData(data):
     mean = np.mean(data, axis = 0)
