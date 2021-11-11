@@ -28,6 +28,7 @@ def main():
 
     # Combine data in order to create training and validation sets
     training_X = np.concatenate((training_6, training_8))
+    training_X = normalizeData(training_X)
     validation_X = np.concatenate((validation_6, validation_8))
 
     # Creates labels for the training data
