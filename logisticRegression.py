@@ -35,15 +35,25 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
-    # Create logistic regression model
+    # Create logistic regression models
     logReg = LogisticRegression(penalty = "l1", solver = "liblinear")
 
     # Trains model
     logReg.fit(training_X, labels_Y)
 
-    # Prints out accuracy of model on test data
+     # Prints out accuracy of model on validation set
     print(logReg.score(validation_X, labels_Y))
+
+
+# Normalizes image data by subtracting mean and dividing by standard deviation
+def normalizeData(data):
+    mean = np.mean(data, axis = 0)
+    std = np.std(data, axis = 0)
+    std[std == 0] = 1
+
+    data_normalized = (data - mean) / std
+
+    return data_normalized
 
 if __name__ == "__main__":
     main()
-
