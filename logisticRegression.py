@@ -97,7 +97,7 @@ def main():
     df_L2 = pd.DataFrame([], columns = ["C", "accuracy"])
 
     c = 0.01
-    while c <= 1.15:
+    while c <= 2:
         # Create models with varying C values and with different penalties
         logReg_L1 = LogisticRegression(C = c, penalty = "l1", solver = "liblinear")
         logReg_L2 = LogisticRegression(C = c, penalty = "l2", solver = "liblinear")
@@ -107,8 +107,8 @@ def main():
         logReg_L2.fit(training_X, labels_Y)
 
         # Create different rows of data for each model
-        row_L1 = {"C" : c, "Accuracy" : logReg_L1.score(validation_X, labels_Y)}
-        row_L2 = {"C" : c, "Accuracy" : logReg_L2.score(validation_X, labels_Y)}
+        row_L1 = {"C" : c, "Accuracy" : 1 - logReg_L1.score(validation_X, labels_Y)}
+        row_L2 = {"C" : c, "Accuracy" : 1 - logReg_L2.score(validation_X, labels_Y)}
 
         # Add each respective row to its dataframe
         df_L1 = df_L1.append(row_L1, ignore_index = True)
@@ -116,8 +116,8 @@ def main():
 
         c = c + 0.01
 
-    ax = df_L1.plot(x = "C", y = "Accuracy", kind = "line", color = "red", label = "L1 penalty")
-    df_L2.plot(x = "C", y = "Accuracy", kind = "line", ax = ax, color = "blue", label = "L2 penalty")
+    ax = df_L1.plot(x = "C", y = "Accuracy", kind = "line", color = "red", label = "Model Using L1 penalty")
+    df_L2.plot(x = "C", y = "Accuracy", kind = "line", ax = ax, color = "blue", label = "Model Using L2 penalty", title = "Validation Error with Varying C Values", ylabel = "Error")
     plt.legend()
     plt.show()
 
