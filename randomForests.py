@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -46,8 +47,8 @@ def main():
 
 
 
-    df = pd.DataFrame([], columns = ["num_trees", "error"])
     # Create random forest classifier model(n_estimator)
+    # df = pd.DataFrame([], columns = ["num_trees", "error"])
     # num_trees = 1
     # while num_trees <= 100:
     #     randForest = RandomForestClassifier(n_estimators = num_trees)
@@ -63,8 +64,6 @@ def main():
 
     # df.plot(x = "num_trees", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying n_estimators Values", ylabel = "Error", xlabel = "Number of Trees")
     # plt.show()
-
-    # df = pd.DataFrame([], columns = ["num_trees", "error"])
  
     # Create random forest classifier model(Max_Depth)
     # df = pd.DataFrame([], columns = ["max_depth", "error"])
@@ -126,6 +125,54 @@ def main():
 
     df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying random_state Values", ylabel = "Error", xlabel = "Number of Trees")
     plt.show()
+    
+
+    # Create random forest classifier model(random_state)
+    df = pd.DataFrame([], columns = ["class_weight", "error"])
+
+    num_trees = 100
+    verbose = 0
+    while verbose <= 50:
+        randForest = RandomForestClassifier(verbose = verbose)
+
+        # Train model with training data
+        randForest.fit(training_X, labels_Y)
+
+        row = {"verbose" : verbose, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+        df = df.append(row, ignore_index = True)
+
+        verbose = verbose + 1
+
+
+    df.plot(x = "verbose", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying verbose Values", ylabel = "Error", xlabel = "Number of Trees")
+    plt.show()
+
+
+    # df4 = pd.DataFrame([], columns = ["n_jobs", "error"])
+    # df4_time = pd.DataFrame([], columns = ["n_jobs", "time"])
+    # n_jobs = 1
+    # while n_jobs <= 100:
+    #     start_time = time.time()
+    #     randForest = RandomForestClassifier(n_estimators = 100, n_jobs = n_jobs)
+
+    #     randForest.fit(training_X, labels_Y)
+
+    #     row = {"n_jobs" : n_jobs, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+    #     row_time = {"n_jobs" : n_jobs, "time" : time.time() - start_time}
+
+    #     df4 = df4.append(row, ignore_index = True)
+    #     df4_time = df4_time.append(row_time, ignore_index = True)
+
+    #     n_jobs = n_jobs + 1
+
+    # df4.plot(x = "n_jobs", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying n_jobs Values", ylabel = "Error", xlabel = "n_jobs")
+    # plt.show()
+    # df4_time.plot(x = "n_jobs", y = "time", kind = "line", color = "red", title = "Time to Train and Run Validation Set on Classifier with Varying n_jobs Values", ylabel = "Time", xlabel = "n_jobs")
+    # plt.show()
+
+
 
 
 def normalizeData(data):
