@@ -47,6 +47,14 @@ def main():
 
 
 
+    #myForest = RandomForestClassifier(n_estimators = 100, max_depth = 40, min_samples_leaf = 1, random_state = 39, max_samples = 0.22)
+    myForest = RandomForestClassifier(n_estimators = 100, max_depth = 40, min_samples_leaf = 1, random_state = 39, max_samples = 0.20, min_samples_split = 10, n_jobs = 3)
+    myForest.fit(training_X, labels_Y)
+    print(myForest.score(test_X, labels_Y))
+
+    quit()
+
+
     # Create random forest classifier model(n_estimator)
     df = pd.DataFrame([], columns = ["num_trees", "error"])
     num_trees = 1
@@ -90,7 +98,7 @@ def main():
 
     num_trees = 100
     min_samples_leaf = 1
-    while min_samples_leaf <= 50:
+    while min_samples_leaf <= 100:
         randForest = RandomForestClassifier(min_samples_leaf = min_samples_leaf)
 
         # Train model with training data
