@@ -48,103 +48,103 @@ def main():
 
 
     # Create random forest classifier model(n_estimator)
-    # df = pd.DataFrame([], columns = ["num_trees", "error"])
-    # num_trees = 1
-    # while num_trees <= 100:
-    #     randForest = RandomForestClassifier(n_estimators = num_trees)
+    df = pd.DataFrame([], columns = ["num_trees", "error"])
+    num_trees = 1
+    while num_trees <= 100:
+        randForest = RandomForestClassifier(n_estimators = num_trees)
 
-    #     # Train model with training data
-    #     randForest.fit(training_X, labels_Y)
+        # Train model with training data
+        randForest.fit(training_X, labels_Y)
 
-    #     row = {"num_trees" : num_trees, "error" : 1 - randForest.score(validation_X, labels_Y)}
+        row = {"num_trees" : num_trees, "error" : 1 - randForest.score(validation_X, labels_Y)}
 
-    #     df = df.append(row, ignore_index = True)
+        df = df.append(row, ignore_index = True)
 
-    #     num_trees = num_trees + 1
+        num_trees = num_trees + 1
 
-    # df.plot(x = "num_trees", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying n_estimators Values", ylabel = "Error", xlabel = "Number of Trees")
-    # plt.show()
+    df.plot(x = "num_trees", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying n_estimators Values", ylabel = "Error", xlabel = "Number of Trees")
+    plt.show()
  
-    # Create random forest classifier model(Max_Depth)
-    # df = pd.DataFrame([], columns = ["max_depth", "error"])
+    #Create random forest classifier model(Max_Depth)
+    df = pd.DataFrame([], columns = ["max_depth", "error"])
 
-    # num_trees = 100
-    # max_depth = 1
-    # while max_depth <= 100:
-    #     randForest = RandomForestClassifier(max_depth = max_depth)
+    num_trees = 100
+    max_depth = 1
+    while max_depth <= 100:
+        randForest = RandomForestClassifier(max_depth = max_depth)
 
-    #     # Train model with training data
-    #     randForest.fit(training_X, labels_Y)
+        # Train model with training data
+        randForest.fit(training_X, labels_Y)
 
-    #     row = {"max_depth" : max_depth, "error" : 1 - randForest.score(validation_X, labels_Y)}
+        row = {"max_depth" : max_depth, "error" : 1 - randForest.score(validation_X, labels_Y)}
 
-    #     df = df.append(row, ignore_index = True)
+        df = df.append(row, ignore_index = True)
 
-    #     max_depth = max_depth + 1
+        max_depth = max_depth + 1
 
-    # df.plot(x = "max_depth", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying Max Depth Values", ylabel = "Error", xlabel = "Number of Trees")
-    # plt.show()
+    df.plot(x = "max_depth", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying max_depth Values", ylabel = "Error", xlabel = "max_depth")
+    plt.show()
     
-    # Create random forest classifier model(min_samples_leaf)
-    # df = pd.DataFrame([], columns = ["min_samples_leaf", "error"])
+    #Create random forest classifier model(min_samples_leaf)
+    df = pd.DataFrame([], columns = ["min_samples_leaf", "error"])
 
-    # num_trees = 100
-    # min_samples_leaf = 1
-    # while min_samples_leaf <= 50:
-    #     randForest = RandomForestClassifier(min_samples_leaf = min_samples_leaf)
+    num_trees = 100
+    min_samples_leaf = 1
+    while min_samples_leaf <= 50:
+        randForest = RandomForestClassifier(min_samples_leaf = min_samples_leaf)
 
-    #     # Train model with training data
-    #     randForest.fit(training_X, labels_Y)
+        # Train model with training data
+        randForest.fit(training_X, labels_Y)
 
-    #     row = {"min_samples_leaf" : min_samples_leaf, "error" : 1 - randForest.score(validation_X, labels_Y)}
+        row = {"min_samples_leaf" : min_samples_leaf, "error" : 1 - randForest.score(validation_X, labels_Y)}
 
-    #     df = df.append(row, ignore_index = True)
+        df = df.append(row, ignore_index = True)
 
-    #     min_samples_leaf = min_samples_leaf + 1
+        min_samples_leaf = min_samples_leaf + 1
 
-    # df.plot(x = "min_samples_leaf", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying min_samples_leaf Values", ylabel = "Error", xlabel = "Number of Trees")
-    # plt.show()
-
-
-    # Create random forest classifier model(random_state)
-    # df = pd.DataFrame([], columns = ["random_state", "error"])
-
-    # num_trees = 100
-    # random_state = 1
-    # while random_state <= 50:
-    #     randForest = RandomForestClassifier(random_state = random_state)
-
-    #     # Train model with training data
-    #     randForest.fit(training_X, labels_Y)
-
-    #     row = {"random_state" : random_state, "error" : 1 - randForest.score(validation_X, labels_Y)}
-
-    #     df = df.append(row, ignore_index = True)
-
-    #     random_state = random_state + 1
-
-    # df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying random_state Values", ylabel = "Error", xlabel = "Number of Trees")
-    # plt.show()
+    df.plot(x = "min_samples_leaf", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying min_samples_leaf Values", ylabel = "Error", xlabel = "min_samples_leaf")
+    plt.show()
 
 
-    # Create random forest classifier model(max_samples)
+    #Create random forest classifier model(random_state)
+    df = pd.DataFrame([], columns = ["random_state", "error"])
+
+    num_trees = 100
+    random_state = 1
+    while random_state <= 50:
+        randForest = RandomForestClassifier(random_state = random_state)
+
+        # Train model with training data
+        randForest.fit(training_X, labels_Y)
+
+        row = {"random_state" : random_state, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+        df = df.append(row, ignore_index = True)
+
+        random_state = random_state + 1
+
+    df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying random_state Values", ylabel = "Error", xlabel = "random_state")
+    plt.show()
+
+
+    #Create random forest classifier model(max_samples)
     df = pd.DataFrame([], columns = ["max_samples", "error"])
 
     num_trees = 100
-    max_samples = 0.1
-    while max_samples <= 100:
+    max_samples = 0.01
+    while max_samples < 1:
         randForest = RandomForestClassifier(max_samples = max_samples)
 
         # Train model with training data
         randForest.fit(training_X, labels_Y)
 
-        row = {"random_state" : max_samples, "error" : 1 - randForest.score(validation_X, labels_Y)}
+        row = {"max_samples" : max_samples, "error" : 1 - randForest.score(validation_X, labels_Y)}
 
         df = df.append(row, ignore_index = True)
 
-        max_samples = max_samples + 0.1
+        max_samples = max_samples + 0.01
 
-    df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying max_samples Values", ylabel = "Error", xlabel = "Number of Trees")
+    df.plot(x = "max_samples", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying max_samples Values", ylabel = "Error", xlabel = "max_samples")
     plt.show()
 
 
