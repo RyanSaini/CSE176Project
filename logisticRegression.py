@@ -45,63 +45,6 @@ def main():
     validation_X = normalizeData(validation_X)
     test_X = normalizeData(test_X)
 
-    
-
-    # Making mean and std matrices
-    #mean = np.mean(training_X, axis = 0)
-    #std = np.std(training_X, axis = 0)
-
-    # Data with 0 mean and data with 0 mean and unit variance
-    #training_X_0_mean = training_X - mean
-    #training_X_normalized = normalizeData(training_X)
-
-    # Display mean image
-    #image = mean
-    #image = np.array(image, dtype='float')
-    #pixels = image.reshape((10, 10))
-    #plt.imshow(pixels, cmap='gray')
-    #plt.show()
-
-    # Display std image
-    #image = std
-    #image = np.array(image, dtype='float')
-    #pixels = image.reshape((10, 10))
-    #plt.imshow(pixels, cmap='gray')
-    #plt.show()
-
-    # Displays first image
-    #image = training_X[0]
-    #image = np.array(image, dtype='float')
-    #pixels = image.reshape((10, 10))
-    #plt.imshow(pixels, cmap='gray')
-    #plt.show()
-
-    # Displays first image with mean subtracted
-    #first_image = training_X_0_mean[0]
-    #first_image = np.array(first_image, dtype='float')
-    #pixels = first_image.reshape((10, 10))
-    #plt.imshow(pixels, cmap='gray')
-    #plt.show()
-
-    # Displays first image with mean subtracted and unit variance
-    #first_image = training_X_normalized[0]
-    #first_image = np.array(first_image, dtype='float')
-    #pixels = first_image.reshape((10, 10))
-    #plt.imshow(pixels, cmap='gray')
-    #plt.show()
-
-    # Create logistic regression models
-    #logReg_L1 = LogisticRegression(C = 1, penalty = "l1", solver = "liblinear")
-    #logReg_L2 = LogisticRegression(C = 1, penalty = "l2", solver = "liblinear")
-
-    # Trains model
-    #logReg_L1.fit(training_X, labels_Y)
-    #logReg_L2.fit(training_X, labels_Y)
-
-    # Prints out accuracy of model on validation set
-    #print(logReg_L1.score(validation_X, labels_Y))
-    #print(logReg_L2.score(validation_X, labels_Y))
-
     df_L1 = pd.DataFrame([], columns = ["C", "error"])
     df_L2 = pd.DataFrame([], columns = ["C", "error"])
 
@@ -129,6 +72,11 @@ def main():
     df_L2.plot(x = "C", y = "error", kind = "line", ax = ax, color = "blue", label = "Model Using L2 penalty", title = "Validation Error with Varying C Values", ylabel = "Error")
     plt.legend()
     plt.show()
+
+    # Print out model's score on the testing set
+    logReg = LogisticRegression(C = 0.2)
+    logReg.fit(training_X, labels_Y)
+    print(logReg.score(test_X, labels_Y))
 
 # Normalizes image data by subtracting mean and dividing by standard deviation
 def normalizeData(data):
