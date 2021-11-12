@@ -180,7 +180,6 @@ def main():
     while max_depth <= 100:
         randForest = RandomForestClassifier(max_depth = max_depth)
 
-        # Train model with training data
         randForest.fit(training_X, labels_Y)
 
         row = {"max_depth" : max_depth, "error" : 1 - randForest.score(validation_X, labels_Y)}
@@ -200,7 +199,6 @@ def main():
     while min_samples_leaf <= 100:
         randForest = RandomForestClassifier(min_samples_leaf = min_samples_leaf)
 
-        # Train model with training data
         randForest.fit(training_X, labels_Y)
 
         row = {"min_samples_leaf" : min_samples_leaf, "error" : 1 - randForest.score(validation_X, labels_Y)}
@@ -221,7 +219,6 @@ def main():
     while random_state <= 50:
         randForest = RandomForestClassifier(random_state = random_state)
 
-        # Train model with training data
         randForest.fit(training_X, labels_Y)
 
         row = {"random_state" : random_state, "error" : 1 - randForest.score(validation_X, labels_Y)}
@@ -242,7 +239,6 @@ def main():
     while max_samples < 1:
         randForest = RandomForestClassifier(max_samples = max_samples)
 
-        # Train model with training data
         randForest.fit(training_X, labels_Y)
 
         row = {"max_samples" : max_samples, "error" : 1 - randForest.score(validation_X, labels_Y)}
