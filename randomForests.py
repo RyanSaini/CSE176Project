@@ -44,8 +44,8 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
+    # Plots validation error with varying number of trees
     df = pd.DataFrame([], columns = ["num_trees", "error"])
-    # Create random forest classifier model
     num_trees = 1
     while num_trees <= 1000:
         randForest = RandomForestClassifier(n_estimators = num_trees)
@@ -60,6 +60,40 @@ def main():
         num_trees = num_trees + 1
 
     df.plot(x = "num_trees", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying n_estimators Values", ylabel = "Error", xlabel = "Number of Trees")
+    plt.show()
+
+    # Plots validation error with varying number of minimum samples needed to split as an int value
+    df2 = pd.DataFrame([], columns = ["split", "error"])
+    split = 2
+    while split <= 100:
+        randForest = RandomForestClassifier(n_estimators = 10, min_samples_split = split)
+
+        randForest.fit(training_X, labels_Y)
+
+        row = {"split" : split, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+        df2 = df2.append(row, ignore_index = True)
+
+        split = split + 1
+
+    df2.plot(x = "split", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying min_samples_split Values As Int", ylabel = "Error", xlabel = "Minimum Number of Samples to Split")
+    plt.show()
+
+    # Plots validation error with varying number of minimum samples needed to split as a float value
+    df3 = pd.DataFrame([], columns = ["split", "error"])
+    split = 0.1
+    while split < 1:
+        randForest = RandomForestClassifier(n_estimators = 10, min_samples_split = split)
+
+        randForest.fit(training_X, labels_Y)
+
+        row = {"split" : split, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+        df3 = df3.append(row, ignore_index = True)
+
+        split = split + 0.1
+
+    df3.plot(x = "split", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying min_samples_split Values As Float", ylabel = "Error", xlabel = "Minimum Number of Samples to Split")
     plt.show()
 
 def normalizeData(data):
