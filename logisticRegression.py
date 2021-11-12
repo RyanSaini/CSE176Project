@@ -45,6 +45,8 @@ def main():
     validation_X = normalizeData(validation_X)
     test_X = normalizeData(test_X)
 
+    
+
     # Making mean and std matrices
     #mean = np.mean(training_X, axis = 0)
     #std = np.std(training_X, axis = 0)

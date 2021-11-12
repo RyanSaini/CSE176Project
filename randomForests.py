@@ -45,7 +45,6 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
-
     # Plots validation error with varying number of trees
     df = pd.DataFrame([], columns = ["num_trees", "error"])
     num_trees = 1
@@ -159,14 +158,13 @@ def main():
         row = {"max_samples" : max_samples, "error" : 1 - randForest.score(validation_X, labels_Y)}
 
         df6 = df6.append(row, ignore_index = True)
-
         max_samples = max_samples + 1
 
     df6.plot(x = "max_samples", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying max_samples Values", ylabel = "Error", xlabel = "max_samples")
     plt.show()
 
 
-# Funcation to normalize data
+# Function to normalize data
 def normalizeData(data):
     mean = np.mean(data, axis = 0)
     std = np.std(data, axis = 0)
