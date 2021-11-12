@@ -107,48 +107,50 @@ def main():
 
 
     # Create random forest classifier model(random_state)
-    df = pd.DataFrame([], columns = ["random_state", "error"])
+    # df = pd.DataFrame([], columns = ["random_state", "error"])
+
+    # num_trees = 100
+    # random_state = 1
+    # while random_state <= 50:
+    #     randForest = RandomForestClassifier(random_state = random_state)
+
+    #     # Train model with training data
+    #     randForest.fit(training_X, labels_Y)
+
+    #     row = {"random_state" : random_state, "error" : 1 - randForest.score(validation_X, labels_Y)}
+
+    #     df = df.append(row, ignore_index = True)
+
+    #     random_state = random_state + 1
+
+    # df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying random_state Values", ylabel = "Error", xlabel = "Number of Trees")
+    # plt.show()
+
+
+    # Create random forest classifier model(max_samples)
+    df = pd.DataFrame([], columns = ["max_samples", "error"])
 
     num_trees = 100
-    random_state = 1
-    while random_state <= 50:
-        randForest = RandomForestClassifier(random_state = random_state)
+    max_samples = 0.1
+    while max_samples <= 100:
+        randForest = RandomForestClassifier(max_samples = max_samples)
 
         # Train model with training data
         randForest.fit(training_X, labels_Y)
 
-        row = {"random_state" : random_state, "error" : 1 - randForest.score(validation_X, labels_Y)}
+        row = {"random_state" : max_samples, "error" : 1 - randForest.score(validation_X, labels_Y)}
 
         df = df.append(row, ignore_index = True)
 
-        random_state = random_state + 1
+        max_samples = max_samples + 0.1
 
-    df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying random_state Values", ylabel = "Error", xlabel = "Number of Trees")
+    df.plot(x = "random_state", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying max_samples Values", ylabel = "Error", xlabel = "Number of Trees")
     plt.show()
+
+
     
 
-    # Create random forest classifier model(random_state)
-    df = pd.DataFrame([], columns = ["class_weight", "error"])
-
-    num_trees = 100
-    verbose = 0
-    while verbose <= 50:
-        randForest = RandomForestClassifier(verbose = verbose)
-
-        # Train model with training data
-        randForest.fit(training_X, labels_Y)
-
-        row = {"verbose" : verbose, "error" : 1 - randForest.score(validation_X, labels_Y)}
-
-        df = df.append(row, ignore_index = True)
-
-        verbose = verbose + 1
-
-
-    df.plot(x = "verbose", y = "error", kind = "line", color = "blue", title = "Validation Error with Varying verbose Values", ylabel = "Error", xlabel = "Number of Trees")
-    plt.show()
-
-
+    # Create random forest classifier model(n_jobs)
     # df4 = pd.DataFrame([], columns = ["n_jobs", "error"])
     # df4_time = pd.DataFrame([], columns = ["n_jobs", "time"])
     # n_jobs = 1
