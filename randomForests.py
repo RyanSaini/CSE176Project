@@ -45,13 +45,9 @@ def main():
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
-
-    #myForest = RandomForestClassifier(n_estimators = 100, max_depth = 40, min_samples_leaf = 1, random_state = 39, max_samples = 0.22)
-    myForest = RandomForestClassifier(n_estimators = 100, max_depth = 40, min_samples_leaf = 1, random_state = 39, max_samples = 0.20, min_samples_split = 10, n_jobs = 3)
+    myForest = RandomForestClassifier(n_estimators = 100, min_samples_leaf = 1, random_state = 39, max_samples = 0.20, min_samples_split = 2, n_jobs = 3)
     myForest.fit(training_X, labels_Y)
     print(myForest.score(test_X, labels_Y))
-
-    quit()
 
     # Plots validation error with varying number of trees
     df = pd.DataFrame([], columns = ["num_trees", "error"])
