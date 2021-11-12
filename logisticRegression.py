@@ -26,67 +26,109 @@ def main():
     validation_6 = images_of_6[500: 1000]
     validation_8 = images_of_8[500: 1000]
 
-    # Combine data in order to create training and validation sets
+    # Select next 500 6s and 8s for test set
+    test_6 = images_of_6[1000:1500]
+    test_8 = images_of_8[1000:1500]
+
+    # Combine data in order to create training, validation, and test sets
     training_X = np.concatenate((training_6, training_8))
     validation_X = np.concatenate((validation_6, validation_8))
+    test_X = np.concatenate((test_6, test_8))
 
     # Creates labels for the training data
     training_Y_6 = [6] * 500
     training_Y_8 = [8] * 500
     labels_Y = np.concatenate((training_Y_6, training_Y_8))
 
+    # Normalize data sets
+    training_X = normalizeData(training_X)
+    validation_X = normalizeData(validation_X)
+    test_X = normalizeData(test_X)
+
+    
+
     # Making mean and std matrices
-    mean = np.mean(training_X, axis = 0)
-    std = np.std(training_X, axis = 0)
+    #mean = np.mean(training_X, axis = 0)
+    #std = np.std(training_X, axis = 0)
 
     # Data with 0 mean and data with 0 mean and unit variance
-    training_X_0_mean = training_X - mean
-    training_X_normalized = normalizeData(training_X)
+    #training_X_0_mean = training_X - mean
+    #training_X_normalized = normalizeData(training_X)
 
     # Display mean image
-    image = mean
-    image = np.array(image, dtype='float')
-    pixels = image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #image = mean
+    #image = np.array(image, dtype='float')
+    #pixels = image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Display std image
-    image = std
-    image = np.array(image, dtype='float')
-    pixels = image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #image = std
+    #image = np.array(image, dtype='float')
+    #pixels = image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Displays first image
-    image = training_X[0]
-    image = np.array(image, dtype='float')
-    pixels = image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #image = training_X[0]
+    #image = np.array(image, dtype='float')
+    #pixels = image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Displays first image with mean subtracted
-    first_image = training_X_0_mean[0]
-    first_image = np.array(first_image, dtype='float')
-    pixels = first_image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #first_image = training_X_0_mean[0]
+    #first_image = np.array(first_image, dtype='float')
+    #pixels = first_image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Displays first image with mean subtracted and unit variance
-    first_image = training_X_normalized[0]
-    first_image = np.array(first_image, dtype='float')
-    pixels = first_image.reshape((10, 10))
-    plt.imshow(pixels, cmap='gray')
-    plt.show()
+    #first_image = training_X_normalized[0]
+    #first_image = np.array(first_image, dtype='float')
+    #pixels = first_image.reshape((10, 10))
+    #plt.imshow(pixels, cmap='gray')
+    #plt.show()
 
     # Create logistic regression models
-    logReg = LogisticRegression(penalty = "l1", solver = "liblinear")
+    #logReg_L1 = LogisticRegression(C = 1, penalty = "l1", solver = "liblinear")
+    #logReg_L2 = LogisticRegression(C = 1, penalty = "l2", solver = "liblinear")
 
     # Trains model
-    logReg.fit(training_X, labels_Y)
+    #logReg_L1.fit(training_X, labels_Y)
+    #logReg_L2.fit(training_X, labels_Y)
 
-     # Prints out accuracy of model on validation set
-    print(logReg.score(validation_X, labels_Y))
+    # Prints out accuracy of model on validation set
+    #print(logReg_L1.score(validation_X, labels_Y))
+    #print(logReg_L2.score(validation_X, labels_Y))
 
+    df_L1 = pd.DataFrame([], columns = ["C", "error"])
+    df_L2 = pd.DataFrame([], columns = ["C", "error"])
+
+    c = 0.01
+    while c <= 2:
+        # Create models with varying C values and with different penalties
+        logReg_L1 = LogisticRegression(C = c, penalty = "l1", solver = "liblinear")
+        logReg_L2 = LogisticRegression(C = c, penalty = "l2", solver = "liblinear")
+
+        # Train different models
+        logReg_L1.fit(training_X, labels_Y)
+        logReg_L2.fit(training_X, labels_Y)
+
+        # Create different rows of data for each model
+        row_L1 = {"C" : c, "error" : 1 - logReg_L1.score(validation_X, labels_Y)}
+        row_L2 = {"C" : c, "error" : 1 - logReg_L2.score(validation_X, labels_Y)}
+
+        # Add each respective row to its dataframe
+        df_L1 = df_L1.append(row_L1, ignore_index = True)
+        df_L2 = df_L2.append(row_L2, ignore_index = True)
+
+        c = c + 0.01
+
+    ax = df_L1.plot(x = "C", y = "error", kind = "line", color = "red", label = "Model Using L1 penalty")
+    df_L2.plot(x = "C", y = "error", kind = "line", ax = ax, color = "blue", label = "Model Using L2 penalty", title = "Validation Error with Varying C Values", ylabel = "Error")
+    plt.legend()
+    plt.show()
 
 # Normalizes image data by subtracting mean and dividing by standard deviation
 def normalizeData(data):
